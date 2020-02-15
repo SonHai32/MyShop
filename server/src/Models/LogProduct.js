@@ -16,10 +16,6 @@ const logProduction = new Schema({
     price: numberRequired,
     discount: Number,
     image_link: stringRequired,
-    image_list: {
-        type: [],
-        required: true
-    },
     view: Number,
 },{timestamps: true
 
