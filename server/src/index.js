@@ -3,19 +3,25 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 const mongoose = require('mongoose');
-
-const middlewares = require('./middlewares')
-const logs = require('./api/logs.js')
+const bodyParser = require('body-parser')
 require('dotenv').config();
 
+const middlewares = require('./middlewares')
+
+
+const products = require('./api/Products')
+const collections = require('./api/collections.js')
 
 const app = express();
 
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useUnifiedTopology: true}, error =>{
-    console.log(error)
+    if(error){
+        console.log(error)
+    }
 });
 
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}))
 app.use(morgan('common'));
 app.use(helmet());
 app.use(cors({
@@ -29,7 +35,8 @@ app.get('/', (req, res) =>{
     })
 })
 
-app.use('/api/logs', logs)
+app.use('/api/Products', products)
+app.use('/api/Collections', collections)
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandle)
 
