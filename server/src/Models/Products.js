@@ -9,18 +9,27 @@ const numberRequired = {
     type: Number,
     required: true
 }
-const logProduction = new Schema({
+const product = new Schema({
     name: stringRequired,
     productId: stringRequired,
     catalogId: stringRequired,
     price: numberRequired,
     discount: Number,
     image_link: stringRequired,
-    view: Number,
+    image_list: {
+        type: [{
+            type: String,
+        }],
+        required: true
+    },
+    view:{
+        type: Number,
+        default: 0
+    },
 },{timestamps: true
 
 })
 
-const LogProductions = mongoose.model('LogProductions', logProduction);
+const Products = mongoose.model('Products', product);
 
-module.exports = LogProductions;
+module.exports = Products;
