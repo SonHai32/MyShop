@@ -11,8 +11,7 @@ const middlewares = require('./middlewares')
 
 const products = require('./api/Products')
 const collections = require('./api/collections.js')
-
-const app = express();
+const users = require('./api/User')
 
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useUnifiedTopology: true}, error =>{
     if(error){
@@ -20,6 +19,8 @@ mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useUnifiedTop
     }
 });
 
+
+const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(morgan('common'));
@@ -37,6 +38,8 @@ app.get('/', (req, res) =>{
 
 app.use('/api/Products', products)
 app.use('/api/Collections', collections)
+app.use('/api/Users', users)
+
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandle)
 
