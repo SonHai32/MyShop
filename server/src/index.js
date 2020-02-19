@@ -27,6 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(morgan('common'));
 app.use(helmet());
+app.use('/uploads', express.static('uploads'))
 app.use(cors({
     origin: process.env.CORS_ORIGIN
 }));
