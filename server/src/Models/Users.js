@@ -24,10 +24,26 @@ const user = new Schema({
     password: {
         ...stringRequired,
     },
-    phonenumber: Number,
-    birthday: Date,
-    Gender: String,
-    address: String
+    phonenumber: {
+        type: Number,
+        min: 3,
+        max: 15
+    },
+    birthday:  {
+        type: Date,
+        default: new Date(Date.now()).toISOString()
+    },
+    Gender: {
+        type: String,
+        default: "Male"
+    },
+    address: {
+        type: String,
+        max: 300
+    },
+    Order:{
+        type: [],
+    }
 })
 
 
