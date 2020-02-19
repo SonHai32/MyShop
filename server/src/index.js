@@ -15,13 +15,16 @@ const products = require('./api/Products')
 const collections = require('./api/collections.js')
 const users = require('./api/Users.js')
 
-const app = express();
+
 
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useUnifiedTopology: true}, error =>{
     if(error){
         console.log(error)
     }
 });
+
+
+const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
