@@ -37,13 +37,32 @@ router.get('/', async (req, res, next) =>{
 })
 
 
-router.post('/', async (req, res, next) =>{
-    try{
-        fileUpload(req, res, (err) =>{
+router.post('/', (req, res, next) =>{
+        fileUpload(req, res, async (err) =>{
             if(err){
-                console.log(err)
+                next(err)
             }else{
-                console.log(req.files[0].path)
+                let imagePaths = [];
+                req.files.forEach(file =>{
+                    imagePaths.push(file.path)
+                })
+                try{
+                    const Production = new Productions({                
+                    name: req.body.name,
+                    productId: req.body.productId,
+                    collectionId: req.body.collectionId,
+                    price: req.body.price,
+                    discount: req.body.discount,
+                    image_link: imagePaths[0],
+                    image_list: imagePaths,
+                    view: req.body.view
+                    })
+                    const createdProduction = await Production.save();
+                    res.json(createdProduction)
+                }catch(err){
+                    next(err)
+                }
+                
             }
         })
         //const Production = new Productions(req.body);
@@ -51,10 +70,6 @@ router.post('/', async (req, res, next) =>{
         //res.json({
           //  message: 'created'
         //})
-    }catch(error){
-        res.json(error)
-        next(error)
-    }
 })
 
 module.exports = router;

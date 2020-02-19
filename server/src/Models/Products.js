@@ -12,7 +12,7 @@ const numberRequired = {
 const product = new Schema({
     name: stringRequired,
     productId: stringRequired,
-    catalogId: stringRequired,
+    collectionId: stringRequired,
     price: numberRequired,
     discount: Number,
     image_link: stringRequired,
