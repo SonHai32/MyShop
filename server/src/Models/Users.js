@@ -25,7 +25,7 @@ const user = new Schema({
         ...stringRequired,
     },
     phonenumber: {
-        type: Number,
+        type: String,
         min: 3,
         max: 15
     },
