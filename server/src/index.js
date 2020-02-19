@@ -26,6 +26,7 @@ mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useUnifiedTop
 
 const app = express();
 
+app.use(express.json())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(morgan('common'));
@@ -35,7 +36,6 @@ app.use(cors({
     origin: process.env.CORS_ORIGIN
 }));
 
-app.use(express.json())
 app.get('/', (req, res) =>{
     res.json({
         message: 'Hello'
