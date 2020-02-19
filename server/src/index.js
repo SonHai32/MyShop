@@ -4,6 +4,8 @@ const helmet = require('helmet');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
+const fileUpload = require('express-fileupload')
+
 require('dotenv').config();
 
 const middlewares = require('./middlewares')
@@ -11,6 +13,7 @@ const middlewares = require('./middlewares')
 
 const products = require('./api/Products')
 const collections = require('./api/collections.js')
+const users = require('./api/Users.js')
 
 const app = express();
 
@@ -37,6 +40,8 @@ app.get('/', (req, res) =>{
 
 app.use('/api/Products', products)
 app.use('/api/Collections', collections)
+app.use('/api/Users', users)
+
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandle)
 
