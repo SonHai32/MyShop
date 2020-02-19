@@ -22,7 +22,7 @@ const fileFilter = (req, file, cb) =>{
 
 const fileUpload = multer({storage: storage, 
     limit:{
-        fileSize: 5*1024*1024
+        fileSize: 5 * 1024 * 1024
     },
     fileFilter: fileFilter
 }).any();
@@ -42,11 +42,14 @@ router.post('/', (req, res, next) =>{
             if(err){
                 next(err)
             }else{
-                let imagePaths = [];
-                req.files.forEach(file =>{
-                    imagePaths.push(file.path)
-                })
+                
                 try{
+
+                    let imagePaths = [];
+                    req.files.forEach(file =>{
+                        imagePaths.push(file.path)
+                    })
+
                     const Production = new Productions({                
                     name: req.body.name,
                     productId: req.body.productId,
@@ -57,19 +60,22 @@ router.post('/', (req, res, next) =>{
                     image_list: imagePaths,
                     view: req.body.view
                     })
+
                     const createdProduction = await Production.save();
-                    res.json(createdProduction)
+                    res.json({
+                        message: "created",
+                        ...createdProduction
+                    })
                 }catch(err){
+                    res.json({
+                        name: err.name,
+                        message: err._message
+                    })
                     next(err)
                 }
                 
             }
-        })
-        //const Production = new Productions(req.body);
-        //const createdProduction = await Production.save();  
-        //res.json({
-          //  message: 'created'
-        //})
+        }) 
 })
 
 module.exports = router;
