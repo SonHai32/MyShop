@@ -9,7 +9,7 @@ const stringRequired = {
 
 const users = new Schema({
     fullname: {
-        ...stringRequired,
+        type: String,
         min: 5,
         max: 30
     },
@@ -26,6 +26,23 @@ const users = new Schema({
     },
     password: {
         ...stringRequired,
+    },
+    gender: {
+        type: String,
+        default: "Male"
+    },
+    phone:{
+        type: String,
+        min: 3,
+        max: 15
+    },
+    address: {
+        type: String,
+        max: 200
+    },
+    birthday: {
+        type: Date,
+        default: new Date(Date.now()).toISOString
     }
 
 })
