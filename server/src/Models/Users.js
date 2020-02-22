@@ -44,6 +44,8 @@ const user = new Schema({
     Order:{
         type: [],
     }
+},{
+    timestamps: true
 })
 
 
