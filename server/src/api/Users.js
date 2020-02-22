@@ -19,7 +19,7 @@ router.get('/', async(req, res, next) =>{
 })
 
 
-router.post('/', (req, res, next) =>{
+router.post('/Create', (req, res, next) =>{
     let newUser = new users(req.body);
     bcrypt.hash(newUser.password, 10, async (err, hash) =>{
         try{
@@ -73,5 +73,8 @@ router.put('/Update/:id', (req, res, next) =>{
            
         } 
 })
+
+
+
 
 module.exports = router;
