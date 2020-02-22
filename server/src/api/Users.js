@@ -1,20 +1,32 @@
 const {Router} = require('express');
 const bcrypt = require('bcrypt')
-
+const jwt = require('jsonwebtoken')
 const users = require('../Models/Users.js');
 
 
 const router = Router();
 
+router.get('/', (req, res, next) =>{
+    const token = req.query.token || req.body.token || req.params.token || req.headers['token'];
+    if(token !== null){
+        jwt.verify(token, process.env.secret, (err, user) =>{
+            if(err){
+                return res.json({
+                    success: false,
+                    message: "Failed to authenticate token" 
+                })
+            }else{
+                req.user = user
+                next()
+                res.json(req.user)
 
-const Users = require('../Models/Users')
-
-router.get('/', async(req, res, next) =>{
-    try{
-        const users = await Users.find();
-        res.json(users)
-    }catch(err){
-        next(err);
+            }
+        }) 
+    }else{
+        return res.status(403).send({
+            success: false,
+            message: "No token provided"
+        })
     }
 })
 
@@ -80,7 +92,6 @@ router.put('/Update/:id', (req, res, next) =>{
         })
          
 })
-
 
 
 

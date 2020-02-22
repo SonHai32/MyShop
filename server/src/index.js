@@ -12,8 +12,9 @@ const middlewares = require('./middlewares')
 
 
 const products = require('./api/Products')
-const collections = require('./api/collections.js')
-const users = require('./api/Users.js')
+const collections = require('./api/collections')
+const users = require('./api/Users')
+const login = require('./auth/Login')
 
 
 
@@ -28,7 +29,7 @@ const app = express();
 
 app.use(express.json())
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({extended: false}))
 app.use(morgan('common'));
 app.use(helmet());
 app.use('/uploads', express.static('uploads'))
@@ -41,10 +42,11 @@ app.get('/', (req, res) =>{
         message: 'Hello'
     })
 })
-
+app.set('secret', 'jsonwebtoken')
 app.use('/api/Products', products)
 app.use('/api/Collections', collections)
 app.use('/api/Users', users)
+app.use('/auth/Login', login)
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandle)
