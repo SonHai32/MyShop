@@ -71,8 +71,7 @@ router.post('/', (req, res, next) =>{
                 }catch(err){
                     res.json({
                         success: false,
-                        name: err.name,
-                        message: err._message
+                        message: err.message
                     })
                     next(err)
                 }
