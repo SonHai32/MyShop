@@ -49,6 +49,7 @@ router.post('/', (req, res, next) =>{
                     req.files.forEach(file =>{
                         imagePaths.push(file.path)
                     })
+                        
 
                     const Production = new Productions({                
                     name: req.body.name,
@@ -63,11 +64,13 @@ router.post('/', (req, res, next) =>{
 
                     const createdProduction = await Production.save();
                     res.json({
+                        success: true,
                         message: "created",
                         ...createdProduction
                     })
                 }catch(err){
                     res.json({
+                        success: false,
                         name: err.name,
                         message: err._message
                     })

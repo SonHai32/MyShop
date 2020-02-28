@@ -17,7 +17,6 @@ router.get('/', (req, res, next) =>{
                 })
             }else{
                 req.user = user
-                next()
                 res.json(req.user)
 
             }
