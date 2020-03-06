@@ -80,4 +80,35 @@ router.post('/', (req, res, next) =>{
         }) 
 })
 
+router.delete('/', (req, res, next) =>{
+    const productId = req.body.productId || req.params.productId
+    
+
+    if(productId){
+            Productions.findOne({productId: productId}, (err, result) =>{
+                if(!err){
+                    if(result){
+                        return result.remove(err =>{
+                        if(err){
+                            res.json({success: false, message: err.message})       
+                        }else{
+                            res.json({success: true, message: 'deleted'})
+                        }
+                    })
+                    }else{
+                        res.status(404);
+                        res.json({success: false, message: 'User Not Found'})
+                    } 
+                }else{
+                    res.json({success: false, message: 'Cant not delete try later'})
+                }
+            })
+       }else{
+            res.json({success: false, message: 'Detete fail'})
+       }
+
+       
+    
+})
+
 module.exports = router;
