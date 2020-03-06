@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
 })
 
 const fileFilter = (req, file, cb) =>{
-    if(file.mimetype === 'image/jpge' || file.mimetype === 'image/png'){
+    if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
         cb(null, true)
     }else{
         cb(null, false)
@@ -42,14 +42,13 @@ router.post('/', (req, res, next) =>{
             if(err){
                 next(err)
             }else{
-                
                 try{
 
                     let imagePaths = [];
                     req.files.forEach(file =>{
                         imagePaths.push(file.path)
                     })
-                        
+                    
 
                     const Production = new Productions({                
                     name: req.body.name,
@@ -81,7 +80,7 @@ router.post('/', (req, res, next) =>{
 })
 
 router.delete('/', (req, res, next) =>{
-    const productId = req.body.productId || req.params.productId
+    const productId = req.body.productId || req.query.productId
     
 
     if(productId){
